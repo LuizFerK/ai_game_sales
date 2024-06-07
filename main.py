@@ -1,10 +1,12 @@
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
 from sklearn.impute import SimpleImputer
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 from sklearn.neural_network import MLPClassifier
 from sklearn.preprocessing import KBinsDiscretizer, OneHotEncoder
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 
 # Carrega os dados do arquivo CSV
 data = pd.read_csv('assets/Video_Games_Sales_as_at_22_Dec_2016.csv')
@@ -58,3 +60,10 @@ y_pred = mlp.predict(X_test)
 # Acurácia
 accuracy = accuracy_score(y_test, y_pred)
 print("\nAcurácia do modelo no conjunto de teste:", accuracy)
+
+# Matriz de confusão
+cm = confusion_matrix(y_test, y_pred, labels=mlp.classes_)
+disp = ConfusionMatrixDisplay(confusion_matrix=cm,
+                              display_labels=mlp.classes_)
+disp.plot()
+plt.show()
